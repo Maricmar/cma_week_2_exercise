@@ -41,10 +41,8 @@ wildschwein_BE |>
 #No gaps
 
 
-# AND 3. Were all individuals tracked concurrently or sequentially?
- 
+# 3. Were all individuals tracked concurrently or sequentially?
 
-# Answer 3:  
 wildschwein_BE |>
   filter(DatetimeUTC < "2014-08-24") |>
   ggplot(aes(DatetimeUTC, timelag_sec, col = TierID)) +
@@ -55,9 +53,7 @@ ggplot(wildschwein_BE, aes(timelag_sec/60)) +
   geom_histogram(binwidth = 1) +
   lims(x = c(0, 5000/60)) +
   scale_y_log10()
-# the sampling intervals were between 5-75 min. peak around 15 min with outliers above and under these 15 min. 
-
-
+# the sampling intervals were between 5-75 min. peak around 15 min with outliers above and under 
 
 # Task 3 Deriving movement parameters I: Speed
 # calculate steplength and speed
@@ -76,15 +72,15 @@ hist(log10(wildschwein_BE$speed_ms), 100)
 caro <- read_delim("data/caro60.csv")
 # format
 caro <- st_as_sf(caro, coords = c("E", "N"), crs = 2056, remove = FALSE) 
-# 1. I create sequences in the required granularities 
+# 1. create sequences
 seq_3 <- seq(from = 1, to = 200, by = 3)
 seq_6 <- seq(from = 1, to = 200, by = 6)
 seq_9 <- seq(from = 1, to = 200, by = 9)
-# 2. slice the data into 3 granularities
+# 2. slice the data
 caro_3 <- dplyr::slice(caro, seq_3)
 caro_6 <- dplyr::slice(caro, seq_6)
 caro_9 <- dplyr::slice(caro, seq_9)
-# check if the process to reduce granularity worked
+# check 
 nrow(caro)
 ## [1] 200
 nrow(caro_3)
